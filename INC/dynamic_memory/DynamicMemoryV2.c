@@ -7,6 +7,23 @@
  * @return State of error if present
  * @note This is static private function
 */
+static void _MoveDataFromList(uint8_t* pDST, uint8_t* pSRC, uint8_t len)
+{
+    uint8_t i;
+
+    for(i=0; i<len; i++)
+    {
+        pDST[i] = pSRC[i];
+    }
+}
+
+/*******************************************************************************************************************
+ * @name    CheckForErros
+ * @brief   Check data in terms of worng content
+ * @param[in] pContrldata Pointer to control stucture
+ * @return State of error if present
+ * @note This is static private function
+*/
 DYNAMIC_ARRAY_StatusTypeDef CheckStackState(MallocControlData_t* pControlData)
 {
     DYNAMIC_ARRAY_StatusTypeDef tStatus;
@@ -30,10 +47,10 @@ DYNAMIC_ARRAY_StatusTypeDef CheckStackState(MallocControlData_t* pControlData)
  *@name     AddFirstItem
  *@brief    Return last element from dynamic array to given pointer
  *@param    pContrldata     Pointer to control data
- *@param    pEle            Start addr for data to put inside
+ *@param    pData            Start addr for data to put inside
  *@return   Status of the operation
 */
-uint8_t AddFirstItem(MallocControlData_t* pControlData, uint8_t* pEle)
+uint8_t AddFirstItem(MallocControlData_t* pControlData, uint8_t* pData)
 {
     MemoryMember_t* pFirstElement;
     pFirstElement = ((MemoryMember_t*)malloc(sizeof(MemoryMember_t)));
@@ -50,11 +67,8 @@ uint8_t AddFirstItem(MallocControlData_t* pControlData, uint8_t* pEle)
     pControlData->n     = 0x01;
     pControlData->init  = TRUE;
 
-    uint8_t i;
-    for(i=0; i<DATA_LEN; i++)
-    {
-        pFirstElement->mydata[i] = pEle[i];
-    }
+    _MoveDataFromList(pFirstElement->mydata, pData, DATA_LEN);
+
     return 0x00;
 }
 //================================================================================================================
@@ -64,11 +78,11 @@ uint8_t AddFirstItem(MallocControlData_t* pControlData, uint8_t* pEle)
  *@brief    Add element on the HEAD of array
 
  *@param    pContrldata     Pointer to control data
- *@param    pEle            Start addr for data to put inside
+ *@param    pData            Start addr for data to put inside
 
  *@return   Status of the operation
 */
-uint8_t AddHeadElement(MallocControlData_t* pControlData, uint8_t* pEle)
+uint8_t AddHeadElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t temp;
     temp = CheckStackState(pControlData);
@@ -92,12 +106,8 @@ uint8_t AddHeadElement(MallocControlData_t* pControlData, uint8_t* pEle)
     pControlData->pHead = pNewHead;
     pControlData->n++;
 
-    // 
-    uint8_t i, j;
-    for (i=0; i<DATA_LEN; i++)
-    {
-        pNewHead->mydata[i] = pEle[i];
-    }
+    _MoveDataFromList(pNewHead->mydata, pData, DATA_LEN);
+
     return 0x00;
 }
 //================================================================================================================
@@ -107,11 +117,11 @@ uint8_t AddHeadElement(MallocControlData_t* pControlData, uint8_t* pEle)
  *@brief    Add element on the TAILL of array
 
  *@param    pContrldata     Pointer to control data
- *@param    pEle            Start addr for data to put inside
+ *@param    pData            Start addr for data to put inside
 
  *@return   Status of the operation
 */
-uint8_t AddTaillElement(MallocControlData_t* pControlData, uint8_t* pEle)
+uint8_t AddTaillElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t temp;
     temp = CheckStackState(pControlData);
@@ -134,11 +144,8 @@ uint8_t AddTaillElement(MallocControlData_t* pControlData, uint8_t* pEle)
     pControlData->pTail = pNewTail;
     pControlData->n++;
 
-    uint8_t i,j;
-    for(i=0; i<DATA_LEN; i++)
-    {
-        pNewTail->mydata[i] = *(pEle + i);
-    }
+    _MoveDataFromList(pNewTail->mydata, pData, DATA_LEN);
+
     return 0x00;
 }
 //================================================================================================================
@@ -147,11 +154,11 @@ uint8_t AddTaillElement(MallocControlData_t* pControlData, uint8_t* pEle)
  *@name     RemoveHeadElement
  *@brief    Return last element from dynamic array to given pointer
  *@param    pContrldata to control data
- *@param    pRet start addr to place data
+ *@param    pData start addr to place data
  *@param    inRemove remove or not last element
  *@return   Status of the operation
 */
-uint8_t RemoveHeadElement(MallocControlData_t* pControlData, uint8_t* pRet)
+uint8_t RemoveHeadElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t temp;
     temp = CheckStackState(pControlData);
@@ -164,10 +171,7 @@ uint8_t RemoveHeadElement(MallocControlData_t* pControlData, uint8_t* pRet)
     // 1. Return head element
     pOldHead = pControlData->pHead;
     pNewHead = pOldHead->pPrev;
-    for (i=0; i<DATA_LEN; i++)
-    {
-        *(pRet + i) = pOldHead->mydata[i];
-    }
+    _MoveDataFromList(pData, pOldHead->mydata, DATA_LEN);
 
     // 3. Removing element from memory
     if((pControlData->pTail == pControlData->pHead) || (pControlData->n == 0x1))
@@ -201,11 +205,11 @@ uint8_t RemoveHeadElement(MallocControlData_t* pControlData, uint8_t* pRet)
  *@name     RemoveTaillElement
  *@brief    Return last element from dynamic array to given pointer
  *@param    pContrldata to control data
- *@param    pRet start addr to place data
+ *@param    pData start addr to place data
  *@param    inRemove remove or not last element
  *@return   Status of the operation
 */
-uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
+uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t temp = CheckStackState(pControlData);
     if(temp) return temp;
@@ -215,11 +219,7 @@ uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
 
     pOldTail = pControlData->pTail;
     pNewTail = pOldTail->pNext;
-    uint8_t i;
-    for(i=0; i<DATA_LEN; i++)
-    {
-        *(pRet + i) = pOldTail->mydata[i];
-    }
+    _MoveDataFromList(pData, pOldTail->mydata, DATA_LEN);
 
     if((pControlData->pTail == pControlData->pHead) || (pControlData->n == 0x1))
     {
@@ -232,18 +232,94 @@ uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
     {
         pNewTail->pPrev = NULL;
         pControlData->pTail = pNewTail;
-        if(pControlData->n > 0x00)
-            pControlData->n--;
+        pControlData->n--;
     }
     else
     {   return FALSE;}
 
-    #ifdef DEBUG_ON
-        printf("free ADDR:= 0x%08x \n", pOldTail);
-    #endif
+#ifdef DEBUG_ON
+    printf("free ADDR:= 0x%08x \n", pOldTail);
+#endif
+
 
     free((MemoryMember_t*)pOldTail);
     return TRUE;
+}
+//================================================================================================================
+
+static MemoryMember_t* _FindElementPointer(MallocControlData_t* pControlData, uint8_t inIntex)
+{
+    uint8_t tDirection,i;
+    MemoryMember_t* pTempToFind;
+
+    tDirection = inIntex / pControlData->n;
+    if(tDirection > (pControlData->n / 2))
+    {   pTempToFind = pControlData->pHead;
+        inIntex = inIntex - pControlData->n;
+        for (i=0; i < inIntex; i++)
+        {
+            pTempToFind = pTempToFind->pPrev;
+        }
+    }
+    else
+    {   pTempToFind = pControlData->pTail;
+        for (i=0; i < inIntex; i++)
+        {
+            pTempToFind = pTempToFind->pNext;
+        }
+    } 
+
+    return pTempToFind;
+}
+
+/*****************************************************************************************************************
+ *@name     RemoveRandomElement
+ *@brief    Remove specyfic elements from list
+ *@param    pContrldata to control data
+ *@param    pData start addr to place data
+ *@param    inIntex Index of emement to return
+ *@return   Status of the operation
+*/
+uint8_t RemoveRandomElement(MallocControlData_t* pControlData, uint8_t* pData, uint8_t inIntex)
+{
+    if(inIntex >= pControlData->n) return 0xFF;
+
+    MemoryMember_t* pTempToRemve = _FindElementPointer(pControlData, inIntex);
+
+    if(pTempToRemve == pControlData->pHead) 
+    {
+        RemoveHeadElement(pControlData, pData);
+        return 0;
+    }
+    if(pTempToRemve == pControlData->pTail)
+    {
+        RemoveTaillElement(pControlData, pData);
+        return 0;
+    }
+    else{;}
+    
+    if(pControlData->n >= 0x2)
+    {
+        MemoryMember_t* pTempxPrev;
+        MemoryMember_t* pTempxNext;
+
+        pTempxNext = (MemoryMember_t*)(pTempToRemve->pNext);
+        pTempxPrev = (MemoryMember_t*)(pTempToRemve->pPrev);
+        pTempxNext->pPrev = (MemoryMember_t*)pTempxPrev;
+        pTempxPrev->pNext = (MemoryMember_t*)pTempxNext;
+
+        pControlData->n--;
+
+        _MoveDataFromList(pData, pTempToRemve->mydata, DATA_LEN);
+
+#ifdef DEBUG_ON
+        printf("free ADDR:= 0x%08x \n", pTempToRemve);
+#endif
+        free(pTempToRemve);
+        return 0;
+    }
+
+    return 0xFF;
 }
 //================================================================================================================
 
@@ -251,20 +327,17 @@ uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
  *@name     GetHeadElement
  *@brief    Return last element from dynamic array to given pointer
  *@param    pContrldata to control data
- *@param    pRet start addr to place data
+ *@param    pData start addr to place data
  *@return   Status of the operation
 */
-uint8_t GetHeadElement(MallocControlData_t* pControlData, uint8_t* pRet)
+uint8_t GetHeadElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t i;
     uint8_t temp = CheckStackState(pControlData);
     if(temp) return temp;
 
     MemoryMember_t* pHead = pControlData->pHead;
-    for(i=0; i<DATA_LEN; i++)
-    {
-        pRet[i] = pHead->mydata[i];
-    }
+    _MoveDataFromList(pData, pHead->mydata, DATA_LEN);
 }
 //================================================================================================================
 
@@ -272,20 +345,17 @@ uint8_t GetHeadElement(MallocControlData_t* pControlData, uint8_t* pRet)
  *@name     GetTaillElement
  *@brief    Return last element from dynamic array to given pointer
  *@param    pContrldata to control data
- *@param    pRet start addr to place data
+ *@param    pData start addr to place data
  *@return   Status of the operation
 */
-uint8_t GetTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
+uint8_t GetTaillElement(MallocControlData_t* pControlData, uint8_t* pData)
 {
     uint8_t i;
     uint8_t temp = CheckStackState(pControlData);
     if(temp) return temp;
 
     MemoryMember_t* pTail = pControlData->pTail;
-    for(i=0; i<DATA_LEN; i++)
-    {
-        pRet[i] = pTail->mydata[i];
-    }
+    _MoveDataFromList(pData, pTail->mydata, DATA_LEN);
 }
 //================================================================================================================
 
@@ -293,38 +363,16 @@ uint8_t GetTaillElement(MallocControlData_t* pControlData, uint8_t* pRet)
  *@name     GetRandomElement
  *@brief    Return specyfis element from list
  *@param    pContrldata to control data
- *@param    pEle start addr to place data
+ *@param    pData start addr to place data
  *@param    inIntex Index of emement to return
  *@return   Status of the operation
 */
-uint8_t GetRandomElement(MallocControlData_t* pControlData, uint8_t* pRet, uint8_t inIntex)
+uint8_t GetRandomElement(MallocControlData_t* pControlData, uint8_t* pData, uint8_t inIntex)
 {
-    if(inIntex >= pControlData->n) return 0xFF;
-
-    uint8_t tDirection,i;
+    if(inIntex >= pControlData->n) return 0xFF;  
     MemoryMember_t* pTemp;
-
-    tDirection = inIntex / pControlData->n;
-    if(tDirection > (pControlData->n / 2))
-    {   pTemp = pControlData->pHead;
-        inIntex = inIntex - pControlData->n;
-        for (i=0; i < inIntex; i++)
-        {
-            pTemp = pTemp->pPrev;
-        }
-    }
-    else
-    {   pTemp = pControlData->pTail;
-        for (i=0; i < inIntex; i++)
-        {
-            pTemp = pTemp->pNext;
-        }
-    }    
-    
-    for(i=0; i<DATA_LEN; i++)
-    {
-        pRet[i] = pTemp->mydata[i];
-    }
+    pTemp = _FindElementPointer(pControlData, inIntex);
+    _MoveDataFromList(pData, pTemp->mydata, DATA_LEN);
 
     return 0x00;
 }
@@ -420,7 +468,7 @@ static void _PrintSpecStruct(uint8_t* pBase)
     putchar('\n');
     printf("[%x] | ", ptemp->index);
     printf("ADDR:= 0x%08x | ", ptemp);
-    printf("DATA1:= 0x%x |", ptemp->num1);
+    printf("DATA1:= 0x%x | ", ptemp->num1);
     printf("DATA2:= 0x%x \n", ptemp->num2);
     putchar('\n');
 }
@@ -484,7 +532,7 @@ void CallMyDynamicStackTest4(void)
     AddHeadElement(&mallControl, (uint8_t*)&row2);
     AddHeadElement(&mallControl, (uint8_t*)&row3);
 
-    PrintAllElements(&mallControl, DIRECTION_TAIL_TO_HEAD);
+    PrintAllElements(&mallControl, DIRECTION_HEAD_TO_TAIL);
 
     GetRandomElement(&mallControl, (uint8_t*)&temp, 0);
     printf("Data: %x | %x | %x \n", temp.index, temp.num1, temp.num2);
@@ -494,6 +542,39 @@ void CallMyDynamicStackTest4(void)
 
     GetRandomElement(&mallControl, (uint8_t*)&temp, 2);
     printf("Data: %x | %x | %x \n", temp.index, temp.num1, temp.num2);
+
+    RemoveAllElements(&mallControl);
+}
+
+void CallMyDynamicStackTest5(void)
+{
+    MallocControlData_t mallControl;
+    oneRow_t row1, row2, row3, temp;
+    mallControl.pFunSpecyfic = &_PrintSpecStruct;
+    
+    row1.index = 1;
+    row1.num1 = 0xAAAA;
+    row1.num2 = 0xBBBB;
+
+    row2.index = 2;
+    row2.num1 = 0xCCCC;
+    row2.num2 = 0xDDDD;
+
+    row3.index = 3;
+    row3.num1 = 0xEEEE;
+    row3.num2 = 0xFFFF;
+
+    AddFirstItem(&mallControl, (uint8_t*)&row1);
+    AddHeadElement(&mallControl, (uint8_t*)&row2);
+    AddHeadElement(&mallControl, (uint8_t*)&row3);
+
+    PrintAllElements(&mallControl, DIRECTION_HEAD_TO_TAIL);
+
+    if(RemoveRandomElement(&mallControl, (uint8_t*)&temp, 0))   printf("Some ERROR!!! \n");
+    if(RemoveRandomElement(&mallControl, (uint8_t*)&temp, 0))   printf("Some ERROR!!! \n");
+    if(RemoveRandomElement(&mallControl, (uint8_t*)&temp, 0))   printf("Some ERROR!!! \n");
+
+    PrintAllElements(&mallControl, DIRECTION_HEAD_TO_TAIL);
 
     RemoveAllElements(&mallControl);
 }

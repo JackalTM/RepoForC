@@ -1,5 +1,4 @@
 #include "procedure1.h"
-#include <stdio.h>
 
 void GetBitWiseOperation(uint8_t n)
 {

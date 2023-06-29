@@ -16,6 +16,7 @@
 #define DYNAMIC_ARRAY_DATA_PRESENT  0x55U
 #define DYNAMIC_ARRAY_REMOVE        0xFFU
 */
+
 typedef enum 
 {
     DYNAMIC_ARRAY_DATA_OK       = 0x00U,
@@ -55,7 +56,6 @@ typedef struct
     pFunPrint pFunSpecyfic;
 }MallocControlData_t;
 
-
 uint8_t AddFirstItem(MallocControlData_t* pControlData, uint8_t* pEle);
 
 uint8_t AddHeadElement(MallocControlData_t* pControlData, uint8_t* pEle);
@@ -63,6 +63,7 @@ uint8_t AddTaillElement(MallocControlData_t* pControlData, uint8_t* pEle);
 
 uint8_t RemoveHeadElement(MallocControlData_t* pControlData, uint8_t* pRet);
 uint8_t RemoveTaillElement(MallocControlData_t* pControlData, uint8_t* pRet);
+uint8_t RemoveRandomElement(MallocControlData_t* pControlData, uint8_t* pRet, uint8_t inIntex);
 
 uint8_t GetHeadElement(MallocControlData_t* pControlData, uint8_t* pRet);
 uint8_t GetTaillElement(MallocControlData_t* pControlData, uint8_t* pRet);
@@ -76,3 +77,4 @@ DYNAMIC_ARRAY_StatusTypeDef CheckStackState(MallocControlData_t* pControlData);
 
 void CallMyDynamicStackTest3(void);
 void CallMyDynamicStackTest4(void);
+void CallMyDynamicStackTest5(void);
