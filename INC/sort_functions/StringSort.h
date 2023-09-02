@@ -1,3 +1,7 @@
+#include "_sort_function_inc.h"
+#ifdef _STRING_SORT_H
+
+//=============================================================================
 #include <stdio.h>
 #include <stdint.h>
 
@@ -12,3 +16,6 @@ void SortQuickString(char **ppStrings, uint8_t iListMaxLen);
 void SortQuickInt(uint8_t *pNumbers, uint8_t maxLen);
 
 void CallTestSort(void);
+//=============================================================================
+
+#endif // _STRING_SORT_H

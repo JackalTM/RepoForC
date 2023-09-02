@@ -1,4 +1,5 @@
 #include "sortCompare.h"
+#ifdef _SORT_COMPARE_H
 
 void PrintDataForMerge(int* pArrayMerge)
 {
@@ -95,3 +96,5 @@ void CallTest(void)
     printf("Time of QuickSort:  %f e-%d \n", cpu_time_quick, AMOUNT_OF_ZEROS);
     printf("Time of BubleSort:  %f e-%d \n", cpu_time_buble, AMOUNT_OF_ZEROS);
 }
+
+#endif // _SORT_COMPARE_H

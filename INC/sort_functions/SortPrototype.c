@@ -1,4 +1,5 @@
 #include "SortPrototype.h"
+#ifdef _SORT_PROTOTYPE_H
 
 void PrintListOfNumbers_(uint8_t *pNumbers, uint8_t n)
 {
@@ -152,3 +153,5 @@ void SortQuick_v1(uint8_t *pNumbers, uint8_t MAX)
     PrintListOfNumbers_(pNumbers, 0);
     return;
 }
+
+#endif // _SORT_PROTOTYPE_H

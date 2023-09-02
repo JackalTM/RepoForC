@@ -1,3 +1,7 @@
+#include "_sort_function_inc.h"
+#ifdef _QUICK_SORT_H
+
+//================================================================================================
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,4 +15,6 @@ void QuickSort_INT_v2 (int parray[], int low, int high, int* pSelfCall);
 
 void CallQuickSortINT_v1(int idxArray);
 void CallQuickSortINT_v2(int idxArray);
-//====================================================================================================================================================
+//================================================================================================
+
+#endif // _QUICK_SORT_H

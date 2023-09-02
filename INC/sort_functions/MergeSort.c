@@ -1,4 +1,5 @@
 #include "MergeSort.h"
+#ifdef _MERGE_SORT_H
 
 // function to sort the subsection pArray[i .. j] of the array pArray[]
 /******************************************************************************************************
@@ -118,3 +119,5 @@ void CallMergeSortINT_v1(void)
     printf("\n Amount of self call %d \n", selfCall+1);
     printf("\n Amount of memory consumed: %dB \n", selfCall+sizeof(int));
 }
+
+#endif // _MERGE_SORT_H

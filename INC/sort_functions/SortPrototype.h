@@ -1,3 +1,6 @@
+#include "_sort_function_inc.h"
+#ifdef _SORT_PROTOTYPE_H
+
 #include <stdio.h>
 #include <stdint.h>
 
@@ -8,3 +11,5 @@
 void PrintListOfNumbers_(uint8_t *pNumbers, uint8_t n);
 
 void SortQuick_v1(uint8_t *pNumbers, uint8_t MAX);
+
+#endif // _SORT_PROTOTYPE_H

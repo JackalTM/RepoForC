@@ -1,4 +1,5 @@
 #include "SortQuickMyFunc.h"
+#ifdef _SORT_QUICK_MY_FUNS_H
 
 // Funkcja do wypisywania całej listy
 /***********************************************************************************************
@@ -128,3 +129,4 @@ void SortQuick_v2(uint8_t *pNumbers, uint8_t MAX)
     PrintListOfNumbers(pNumbers, 0); //Dane posortowane
     printf("\n");
 }
+#endif // _SORT_QUICK_MY_FUNS_H

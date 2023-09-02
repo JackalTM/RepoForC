@@ -1,3 +1,6 @@
+#include "_sort_function_inc.h"
+#ifdef _SORT_COMPARE_H
+
 #include <time.h>
 #include "MergeSort.h"
 #include "QuickSort.h"
@@ -24,3 +27,5 @@ void PrintDataForQuick(int* pArrayQuick);
 void PrintDataForBuble(int* pArrayBuble);
 
 void CallTest(void);
+
+#endif // _SORT_COMPARE_H

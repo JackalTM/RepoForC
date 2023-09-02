@@ -1,6 +1,5 @@
 #include "StringSort.h"
-
- 
+#ifdef _STRING_SORT_H
 
 //#define DEBUG1
 
@@ -286,3 +285,5 @@ void CallTestSort(void)
 {
     ;
 }
+
+#endif // _STRING_SORT_H

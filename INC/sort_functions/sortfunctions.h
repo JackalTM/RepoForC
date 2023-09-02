@@ -1,3 +1,6 @@
+#include "_sort_function_inc.h"
+#ifdef _SORT_FUNCTIONS_H
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,3 +48,5 @@ uint8_t SortQuickByte(uint8_t* pArray, uint8_t inSTART, uint8_t inEND, uint8_t i
 inline void CallSortQuick1(void);
 inline void CallSortQuick2(void);
 //====================================================================================================================================================
+
+#endif // _SORT_FUNCTIONS_H

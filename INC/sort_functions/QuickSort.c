@@ -1,10 +1,13 @@
 #include "QuickSort.h"
+#ifdef _QUICK_SORT_H
 
 /******************************************************************************************************
  * @name        SwapTwoElementsINT
  * @brief       Quick sort function
+ * 
  * @param[in]   pA Pointer first element
  * @param[in]   pB Pointer second element
+ * 
  * @note        void 
  * @return      void 
 */
@@ -20,9 +23,11 @@ void SwapTwoElementsINT (int *pA, int *pB)
 /******************************************************************************************************
  * @name        QuickSortPartitionINT
  * @brief       Split array into two, on one side of is bigger and on the other side smaller
+ * 
  * @param[in]   pArray Pointer to an array to sort
  * @param[in]   low Index of first element
  * @param[in]   high Index of last element
+ * 
  * @note        void 
  * @return      new pivot idx
 */
@@ -50,9 +55,11 @@ int QuickSortPartitionINT(int pArray[], int idxLow, int idxHigh)
 /******************************************************************************************************
  * @name        QuickSort_INT_v1
  * @brief       Quick sort function
+ * 
  * @param[in]   pArray Pointer to an array to sort
  * @param[in]   first Index of first element
  * @param[in]   last Index of last element
+ * 
  * @note        void 
  * @return      void 
 */
@@ -94,9 +101,11 @@ void QuickSort_INT_v1(int pArray[], int first, int last, int* pSelfCall)
 /******************************************************************************************************
  * @name        QuickSort_INT_v2
  * @brief       Quick sort version v2
+ * 
  * @param[in]   pArray Pointer to an array to sort
  * @param[in]   low Index of first element
  * @param[in]   high Index of last element
+ * 
  * @note        void 
  * @return      void 
 */
@@ -167,3 +176,5 @@ void CallQuickSortINT_v2(int idxArray)
     printf("\n Amount of self call %d \n . \n", selfCall);  
 }
 //=====================================================================================================
+
+#endif // _QUICK_SORT_H

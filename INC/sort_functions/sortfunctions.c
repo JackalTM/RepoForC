@@ -1,4 +1,5 @@
 #include "sortfunctions.h"
+#ifdef _SORT_FUNCTIONS_H
 
 /******************************************************************************************************
  * @name        _CheckIfSorted 
@@ -356,7 +357,7 @@ void CallSortBouble3(void)
     uint8_t numOfItems = 3;//sizeof(pArr) / itemSize;
 
     sortFunctionPointers_t tFunStruct;
-    tFunStruct.pCompare    = &_CompareElementStr;
+    //tFunStruct.pCompare    = &_CompareElementStr;
     tFunStruct.pMove       = &_MoveElementANY;
     tFunStruct.sortOrder   = COMPARE_MORE;
     //tFunStruct.sortOrder   = COMPARE_LESS;
@@ -623,3 +624,4 @@ void CallSortQuick3(void)
         for(i=0; i<nmax; i++)   {putchar(pArrayOfByte[i] + 0x30); putchar(' ');}
     }
 }
+#endif // _SORT_COMPARE_H

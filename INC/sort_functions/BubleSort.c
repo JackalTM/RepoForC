@@ -1,12 +1,13 @@
 #include "BubleSort.h"
+#ifdef _BUBLE_SORT_H
 
 /******************************************************************************************************
  * @name        _CheckIfSorted 
  * @brief       This function check is array is sorted and return value
  * 
- * @param[in]   pArray      Pointer to array size of uint8_t
- * @param[in]   inEleN      Number of elements 
- * @param[in]   inAscDsc    Ascending or descending order to sort
+ * @param[in]   pArray Pointer to array size of uint8_t
+ * @param[in]   inEleN Number of elements 
+ * @param[in]   inAscDsc Ascending or descending order to sort
  * 
  * @note        static private function
  * 
@@ -31,15 +32,20 @@ static uint8_t _CheckIfSorted(uint8_t* pArray, uint8_t inEleN, uint8_t inAscDsc)
             { j++; }
         }
     }
+
     if(j == inEleN) return inAscDsc;
     else            return 0x00;
 }
 //=====================================================================================================
 
 /******************************************************************************************************
- * @name    
- * @brief
- * @param[in]
+ * @name        SortBubleINT
+ * @brief       Buble sort for int
+ * 
+ * @param[in]   pArray Pointer to array to sort
+ * @param[in]   inMAX Size of a pointer
+ * @param[in]   pSelfCall Number of self call
+ * 
  * @note
  * @return
 */
@@ -72,6 +78,7 @@ void SortBubleINT(int* pArray, int inMAX, int* pSelfCall)
  *  
  * @param[in]   pStrA Base pointer to first string
  * @param[in]   pStrB Base pointer to second string
+ * @param[in]   inStrLen Lenght of array
  * 
  * @note        This compare function start from smaler addr
  * @return      Compare resoult: 0x01 0x00 0xFF
@@ -382,9 +389,5 @@ void CallSortBouble5(void)
     ;
 }
 //=====================================================================================================
-
-
-
-
-
-
+//====================================================================================================================================================
+#endif // _BUBLE_SORT_H
