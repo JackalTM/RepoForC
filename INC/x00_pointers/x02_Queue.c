@@ -18,7 +18,7 @@ char QueueInit( queueMenagment_t* pQueue,   elm_data_t* pElem)
 
     pQueue->pHead = pNew;
     pQueue->pTail = pNew;
-    pQueue->dAmount = 1;
+    pQueue->lAmount = 1;
 
     _MoveData((char*)&(pNew->element), (char*)&(pElem), sizeof(elm_data_t));
 
@@ -27,7 +27,7 @@ char QueueInit( queueMenagment_t* pQueue,   elm_data_t* pElem)
 
 char QueuePut(queueMenagment_t* pQueue,     elm_data_t* pElem)
 {
-    if(pQueue->dAmount >= QUEUE_TWO_ATLEAST)
+    if(pQueue->lAmount >= QUEUE_TWO_ATLEAST)
     {
         queueEl_t* pNew = (queueEl_t*)malloc(sizeof(queueEl_t));
 
@@ -35,7 +35,7 @@ char QueuePut(queueMenagment_t* pQueue,     elm_data_t* pElem)
         pNew->pPREV = pQueue->pHead;
 
         pQueue->pHead = pNew;
-        pQueue->dAmount++;
+        pQueue->lAmount = pQueue->lAmount + 1;
 
         _MoveData((char*)&(pNew->element), (char*)&(pElem), sizeof(elm_data_t));
 
@@ -47,7 +47,7 @@ char QueuePut(queueMenagment_t* pQueue,     elm_data_t* pElem)
 
 char QueueGet(queueMenagment_t* pQueue,     elm_data_t* pElem)
 {
-    if(pQueue->dAmount >= QUEUE_ONE_ELEMENT)
+    if(pQueue->lAmount >= QUEUE_ONE_ELEMENT)
     {
         _MoveData((char*)&(pQueue->pHead), (char*)(pElem), sizeof(elm_data_t));
         return STATUS_SUCES;
@@ -56,23 +56,22 @@ char QueueGet(queueMenagment_t* pQueue,     elm_data_t* pElem)
         return STATUS_ERROR;
 }
 
-
 char QueueRemove(queueMenagment_t* pQueue,  elm_data_t* pElem)
 {
-    if(pQueue->dAmount == QUEUE_EMPTY)
+    if(pQueue->lAmount == QUEUE_EMPTY)
     {
         return STATUS_ERROR;
     }
-    else if(pQueue->dAmount == QUEUE_ONE_ELEMENT)
+    else if(pQueue->lAmount == QUEUE_ONE_ELEMENT)
     {
         pQueue->pHead = NULL;
         pQueue->pTail = NULL;
-        pQueue->dAmount = QUEUE_EMPTY;
+        pQueue->lAmount = QUEUE_EMPTY;
         free(pQueue->pHead);
 
         return STATUS_SUCES;
     }
-    else // pQueue->dAmount >= QUEUE_TWO_ATLEAST
+    else // pQueue->lAmount >= QUEUE_TWO_ATLEAST
     {
         return STATUS_SUCES;
     }

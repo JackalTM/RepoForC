@@ -20,7 +20,10 @@
     #ifdef _X02_INCLUDE_QUEUE_H
         #include "x02_Queue.h"
 
+        #define TEST_AMOUNT 0x07
+
         void PrintInfoQueue(queueEl_t* pQueElems);
+        void PrintInfoAll(queueMenagment_t* pQueMenag);
         void CALL_TestQueue1(void);
 
     #endif 

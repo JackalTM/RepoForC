@@ -14,8 +14,8 @@
 
 typedef struct 
 {
-    double iData1;
-    double iData2;
+    long lData1;
+    long lData2;
 }elm_data_t;
 
 typedef struct queueEl_t
@@ -29,7 +29,7 @@ typedef struct
 {
     queueEl_t* pHead;
     queueEl_t* pTail;
-    double dAmount;
+    long lAmount;
 }queueMenagment_t;
 
 char QueueInit(queueMenagment_t* pQueue,    elm_data_t* pElem);
