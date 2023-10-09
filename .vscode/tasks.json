@@ -6,7 +6,6 @@
             "command": "C:\\MinGW\\bin\\gcc.exe",
             "args": [
                 "-g",
-                "${workspaceFolder}\\INC\\bit_mask_macros\\*.h",
                 "${workspaceFolder}\\INC\\dynamic_memory\\*.h",
                 "${workspaceFolder}\\INC\\dynamic_memory\\*.c",
                 "${workspaceFolder}\\INC\\simple_functions\\*.h",
@@ -15,6 +14,8 @@
                 "${workspaceFolder}\\INC\\sort_functions\\*.c",
                 "${workspaceFolder}\\INC\\trainingFunctions\\*.h",
                 "${workspaceFolder}\\INC\\trainingFunctions\\*.c",
+                "${workspaceFolder}\\INC\\x00_pointers\\*.h",
+                "${workspaceFolder}\\INC\\x00_pointers\\*.c",
                 "${file}",
                 "-o",
                 "${workspaceFolder}\\xOutput\\${fileBasenameNoExtension}.exe"
