@@ -10,7 +10,7 @@ static void _MoveData(char* pDST, char* pSRC, int dataLenght)
     }
 }
 
-char QueueInit( queueMenagment_t* pQueue,   elm_data_t* pElem)
+char QueueInit(queueMenagment_t* pQueue,   elm_data_t* pElem)
 {
     queueEl_t* pNew = (queueEl_t*)malloc(sizeof(queueEl_t));
     pNew->pNEXT = pNew;
@@ -18,13 +18,24 @@ char QueueInit( queueMenagment_t* pQueue,   elm_data_t* pElem)
 
     pQueue->pHead = pNew;
     pQueue->pTail = pNew;
-    pQueue->lAmount = 1;
+    pQueue->lAmount = QUEUE_ONE_ELEMENT;
 
     _MoveData((char*)&(pNew->element), (char*)&(pElem), sizeof(elm_data_t));
 
     return STATUS_SUCES;
 }
 
+
+/**********************************************************************
+ * @name    QueuePut
+ * @brief   Add another element to the top of the head
+ * 
+ * @param[in]   pQueue Pointer to the menagment structure 
+ * @param[in]   pElem Pointer to the new element 
+ * 
+ * @note           
+ * @return      Char - status of the operation
+*/
 char QueuePut(queueMenagment_t* pQueue,     elm_data_t* pElem)
 {
     if(pQueue->lAmount >= QUEUE_TWO_ATLEAST)
