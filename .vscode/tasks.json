@@ -14,6 +14,8 @@
                 "${workspaceFolder}\\INC\\sort_functions\\*.c",
                 "${workspaceFolder}\\INC\\trainingFunctions\\*.h",
                 "${workspaceFolder}\\INC\\trainingFunctions\\*.c",
+                "${workspaceFolder}\\INC\\tree_object\\*.h",
+                "${workspaceFolder}\\INC\\tree_object\\*.c",
                 "${workspaceFolder}\\INC\\x00_pointers\\*.h",
                 "${workspaceFolder}\\INC\\x00_pointers\\*.c",
                 "${file}",
