@@ -43,3 +43,13 @@
 #ifdef _X10_INCLUDE_TEST_H
 #include "INC/x00_pointers/x10_TEST.h"
 #endif // _X01_INCLUDE_LINKED_LIST_H
+
+//======================================================================================================================
+
+#include "INC/tree_object/_tree_object_inc.h"
+#ifdef _TREE_OBJECT_TEST_H
+//#include "INC/tree_object/tree_object_equasion.h"
+#include "INC/tree_object/tree_object_test.h"
+#endif // _TREE_OBJECT_EQUASION_H
+
+//======================================================================================================================
