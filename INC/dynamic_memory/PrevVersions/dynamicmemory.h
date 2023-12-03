@@ -1,3 +1,4 @@
+#ifdef _DYNAMICMEMORY_H
 #include <stdio.h>      /* printf, scanf, NULL */
 #include <stdint.h>
 #include <stdlib.h>     /* malloc, free, rand */
@@ -44,3 +45,5 @@ void PrintFromDynamicArray(MallocControlData_t* pContrldata,uint8_t printType);
 
 uint8_t DynamicStackTest1(uint8_t exit);
 uint8_t DynamicStackTest2(uint8_t exit);
+
+#endif // _DYNAMICMEMORY_H

@@ -1,4 +1,5 @@
 #include "dynamicmemory.h"
+#ifdef _DYNAMICMEMORY_H
 
 /*****************************************************************************
 * name  - Copydata
@@ -442,6 +443,8 @@ uint8_t DynamicStackTest2(uint8_t exit)
 
     return temp;
 }
+
+#endif //_DYNAMICMEMORY_H
 
 
 

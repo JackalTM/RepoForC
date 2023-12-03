@@ -1,3 +1,5 @@
+#ifdef _DYNAMICMEMORY_V2_H
+
 #include <stdio.h>      /* printf, scanf, NULL */
 #include <stdint.h>
 #include <stdlib.h>     /* malloc, free, rand */
@@ -78,3 +80,5 @@ DYNAMIC_ARRAY_StatusTypeDef CheckStackState(MallocControlData_t* pControlData);
 void CallMyDynamicStackTest3(void);
 void CallMyDynamicStackTest4(void);
 void CallMyDynamicStackTest5(void);
+
+#endif // _DYNAMICMEMORY_V2_H

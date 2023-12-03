@@ -1,5 +1,7 @@
 #include "DynamicMemoryV2.h"
 
+#ifdef _DYNAMICMEMORY_V2_H
+
 /*******************************************************************************************************************
  * @name    CheckForErros
  * @brief   Check data in terms of worng content
@@ -578,3 +580,5 @@ void CallMyDynamicStackTest5(void)
 
     RemoveAllElements(&mallControl);
 }
+
+#endif // _DYNAMICMEMORY_V2_H
