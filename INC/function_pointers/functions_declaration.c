@@ -1,4 +1,5 @@
 #include "functions_declaration.h"
+#ifdef _FUNCTION_DECLARATIONS_H
 
 /*************************************************************************************************
  * @name    
@@ -83,3 +84,5 @@ uint8_t CompareDWORD(uint32_t inA, uint32_t inB)
     else if(inA < inB)      {return COMPARE_RESOULT_LESS;}
 }
 //=================================================================================================
+
+#endif // _FUNCTION_DECLARATIONS_H

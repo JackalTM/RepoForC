@@ -1,5 +1,7 @@
 #include "function_pointers1.h"
 
+#ifdef _FUNCTION_POINTERS1_H
+
 pFunType_oneArg FunctionPointerInAndOutTest1(pFunType_oneArg inPfun)
 {
     pFunType_oneArg pFunNOT;
@@ -71,3 +73,5 @@ void CallFunctionPointerTest2(void)
         printf("i= %x Function return pointer to function: %x \n", i,retval); 
     }   
 }
+
+#endif // _FUNCTION_POINTERS1_H

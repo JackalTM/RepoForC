@@ -1,3 +1,5 @@
+#ifdef _FUNCTION_POINTERS1_H
+
 #include <stdio.h>      /* printf, scanf, NULL */
 #include <stdint.h>
 #include <stdlib.h>     /* malloc, free, rand */
@@ -21,3 +23,5 @@ pFunType_twoArg FunctionPointerInAndOutTest2(pFunType_twoArg pFunIN[], uint8_t m
 
 void CallFunctionPointerTest1(void);
 void CallFunctionPointerTest2(void);
+
+#endif // _FUNCTION_POINTERS1_H
