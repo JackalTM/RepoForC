@@ -1,3 +1,5 @@
+#ifdef _EXEC_QUEST_H
+
 #include <stdio.h>      /* printf, scanf, NULL */
 #include <stdint.h>
 #include <stdlib.h>     /* malloc, free, rand */
@@ -131,3 +133,5 @@ int Question61_getIntersectionNode(MallocControlData_t pMallocControlData1, Mall
 */
 void Question62_merge_sorted(MallocControlData_t pMallocControlData1, MallocControlData_t pMallocControlData2);
 //==============================================================================================
+
+#endif // _EXEC_QUEST_H

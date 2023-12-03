@@ -1,4 +1,5 @@
 #include "excQuest.h"
+#ifdef _EXEC_QUEST_H
 
 /*******************************************************************************
  * @name    static AmountOfElementsInArray
@@ -468,3 +469,5 @@ void Question62_merge_sorted(MallocControlData_t pMallocControlData1, MallocCont
   */
 }
 //==============================================================================================
+
+#endif // #ifdef _EXEC_QUEST_H

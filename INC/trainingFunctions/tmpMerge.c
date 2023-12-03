@@ -1,3 +1,5 @@
+#ifdef _TMP_MERGE_H
+
 void merge_sort(int i, int j, int a[], int aux[]) {
     if (j <= i) {
         return;     // the subsection is empty or a single element
@@ -35,3 +37,5 @@ void merge_sort(int i, int j, int a[], int aux[]) {
         a[k] = aux[k];
     }
 }
+
+#endif // #ifdef _TMP_MERGE_H
