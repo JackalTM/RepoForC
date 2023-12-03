@@ -84,36 +84,78 @@ void CALL_treeTest02(void)
  * @note           
  * @return      void    
 */
-void CALL_treeTest03(void)
+void CALL_treeTest03(char inChar)
+{
+    char tempChar = inChar;
+    char tempOperation = 0x00;
+
+    if(tempChar == 0x00)
+    {
+        tempChar = 0xFF;
+    }
+    else if((tempChar >= '0') && (tempChar <= '9'))
+    {
+        tempChar = tempChar - '0';
+    }
+    else if((tempChar >= 'A') && (tempChar <= 'F'))
+    {
+        tempChar = tempChar - 0x37;
+    }
+    else if((tempChar >= 'a') && (tempChar <= 'f'))
+    {
+        tempChar = tempChar - 0x57;
+    }
+    else
+    {// Opeator condition
+        switch (inChar)
+        {
+            case '+':   tempOperation = 0xFF; break;
+            case '-':   tempOperation = 0xFF; break;
+            case '*':   tempOperation = 0xFF; break;
+            case '/':   tempOperation = 0xFF; break;
+            
+            default:    tempChar = 0xFF;    break;
+        }
+    }
+
+    if(tempOperation == 0xFF)
+    {
+        printf("---------- \n");
+        printf("Input char:= %c \n", inChar);
+        printf("Operation %x \n", inChar);
+        printf("++++++++++ \n"); 
+    }
+    else
+    {
+        printf("---------- \n");
+        printf("Input char:= %c \n", inChar);
+        printf("Number %x \n", tempChar);
+        printf("++++++++++ \n");  
+    }
+}
+//===================================================================================================
+
+/****************************************************************************************************
+ * @name        CALL_treeTest03  
+ * @brief       Call for test tree object  
+ * 
+ * @note           
+ * @return      void    
+*/
+void CALL_treeTest04(char pArrArguments[])
 {
     // 1 + 2 * 3
     treeElemControl_t treeElemControl;
     treeElement_t* pRootTreeObj;
+    char idx;
 
-    pRootTreeObj = TreeObjNewNodeInTree(TreeObjCreateOperation(TREE_OBJ_OPR_ADD));
-    pRootTreeObj->pTreeElemLeft = TreeObjNewNodeInTree(TreeObjCreateValue(1));
-    pRootTreeObj->pTreeElemRigh = TreeObjNewNodeInTree(TreeObjCreateOperation(TREE_OBJ_OPR_MUL));
+    printf("To calculate: %s \n", pArrArguments);
 
-    pRootTreeObj->pTreeElemRigh->pTreeElemLeft = TreeObjNewNodeInTree(TreeObjCreateValue(2));
-    pRootTreeObj->pTreeElemRigh->pTreeElemRigh = TreeObjNewNodeInTree(TreeObjCreateValue(3));
+    TreeObjParse(&pRootTreeObj, pArrArguments, &idx);
 
     treeElemControl.nCalls = 0x00;
     treeElemControl.errorOnCall = 0x00;
     TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0x00);
-
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
-    TreeObjEvaluateTree(pRootTreeObj, &treeElemControl);
-
-    printf("\n\nAfter calculation method 3\n");
-
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
-    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0x00);
-
-    printf("\n -- Amount of self calls:= %2x \n", treeElemControl.nCalls);
-
-    TreeObjReliseAllMemory(pRootTreeObj, &treeElemControl);
 }
 //===================================================================================================
 
