@@ -79,43 +79,65 @@ tree_el* new_node(tree_el el)
 
 void clear_tree(tree_el* tree)
 {
-    if (tree==NULL)
-        return;
+    if (tree == NULL) return;
 
     clear_tree(tree->left);
     clear_tree(tree->right);
     free(tree);
 }
 
-static int is_argument(char c)
+static unsigned int _cheq_num = 0;
+static char is_argument(char c)
 {
-    return (c>='0' && c<='9');
+    if((c >= '0') && (c <= '9'))
+    {
+        printf("| char[%x]= %c \n", _cheq_num, c);
+        _cheq_num++;
+        return TREE_OBJ_TRUE;
+    } 
+    else                            
+        return TREE_OBJ_FALSE;
+}
+static char is_operator(char c)
+{
+    switch (c)
+    {
+    case    '+': break;
+    case    '-': break;
+    case    '*': break;
+    case    '/': break;      
+    
+    default: 
+        return TREE_OBJ_FALSE;
+    }
+
+    printf("| char[%x]= %c \n", _cheq_num, c);
+    _cheq_num++;
+
+    return TREE_OBJ_TRUE;
 }
 
 void parse(tree_el **el, char* input, int *input_ptr)
 {
     char c = input[*input_ptr];
-    printf("|char[%x] := %c| \n", *input_ptr, c);
     (*input_ptr)++;
 
+    if (c==0)   return;
 
-    if (c==0)
+    if (is_argument(c) == TREE_OBJ_TRUE)
+    {
+        *el = new_node(create_val(c - '0'));
         return;
-
-    if (is_argument(c))
-    {
-        //printf(" |ARG= %c \n", c);
-        *el = new_node(create_val(c-'0'));
     }
-    else
+
+    if(is_operator(c) == TREE_OBJ_TRUE)
     {
-        //printf(" |OPR= %c \n", c);
         tree_el *new_el = new_node(create_op(c));
         parse(&(new_el->left), input, input_ptr);
         parse(&(new_el->right), input, input_ptr);
         *el = new_el;
+        return;
     }
-    
 }
 
 void CALL_main_test(char* pStr)
@@ -125,12 +147,20 @@ void CALL_main_test(char* pStr)
     int result;
     
     printf("DEBUG parse: \n");
+
     parse(&root, pStr, &input_ptr);
     print_tree(root, 0);
 
     evaluate(root);
-
     result = root->val;
+    printf("Resoult = %x \n", result);
+
+    parse(&root, pStr, &input_ptr);
+    print_tree(root, 0);
+
+    evaluate(root);
+    result = root->val;
+    printf("Resoult = %x \n", result);
 
     clear_tree(root);
 }

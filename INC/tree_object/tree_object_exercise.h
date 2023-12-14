@@ -9,6 +9,8 @@
 #include <stdlib.h>
 
 #define NO_OP ' '
+#define TREE_OBJ_TRUE   (char)0xFF
+#define TREE_OBJ_FALSE  (char)0x00
 
 typedef struct tree_el
 {

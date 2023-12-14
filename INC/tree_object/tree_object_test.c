@@ -136,7 +136,7 @@ void CALL_treeTest03(char inChar)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        CALL_treeTest03  
+ * @name        CALL_treeTest04 
  * @brief       Call for test tree object  
  * 
  * @note           
@@ -144,18 +144,94 @@ void CALL_treeTest03(char inChar)
 */
 void CALL_treeTest04(char pArrArguments[])
 {
-    // 1 + 2 * 3
-    treeElemControl_t treeElemControl;
-    treeElement_t* pRootTreeObj;
-    char idx;
+    //"+12-34 "
+    treeElemParse_t     treeElemParse;
+    treeElement_t*      pRootTreeObj;
 
-    printf("To calculate: %s \n", pArrArguments);
+    treeElemParse.pStr  = pArrArguments;
+    treeElemParse.idx   = 0x00;
+    treeElemParse.nMax  = strlen(pArrArguments);
 
-    TreeObjParse(&pRootTreeObj, pArrArguments, &idx);
+    printf("Input string: %s \n", pArrArguments);
+    printf("strlen()= %x \n", treeElemParse.nMax);
+
+    TreeObjParse_Alpha(&treeElemParse);
+}
+//===================================================================================================
+
+/****************************************************************************************************
+ * @name        CALL_treeTest05
+ * @brief       Call for test tree object  
+ * 
+ * @note           
+ * @return      void    
+*/
+void CALL_treeTest05(char pArrArguments[])
+{
+    //"+12-34 "
+    treeElemControl_t   treeElemControl;
+    treeElemParse_t     treeElemParse;
+    treeElement_t*      pRootTreeObj;
+
+    treeElemParse.pStr  = pArrArguments;
+    treeElemParse.idx   = 0x00;
+    treeElemParse.nMax  = strlen(pArrArguments);
+
+    printf("Input string: %s \n", pArrArguments);
+    printf("strlen()= %x \n", treeElemParse.nMax);
+
+    TreeObjParse_Beta(&pRootTreeObj, &treeElemParse);
 
     treeElemControl.nCalls = 0x00;
     treeElemControl.errorOnCall = 0x00;
-    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0x00);
+    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0);
+
+    treeElemControl.nCalls = 0x00;
+    treeElemControl.errorOnCall = 0x00;
+    TreeObjEvaluateTree(pRootTreeObj, &treeElemControl);
+    printf("| %s = %f \n", pArrArguments, pRootTreeObj->value);
+
+    treeElemControl.nCalls = 0x00;
+    treeElemControl.errorOnCall = 0x00;
+    TreeObjReliseAllMemory(pRootTreeObj, &treeElemControl);
+}
+//===================================================================================================
+
+/****************************************************************************************************
+ * @name        CALL_treeTest06
+ * @brief       Call for test tree object  
+ * 
+ * @note           
+ * @return      void    
+*/
+void CALL_treeTest06(char pArrArguments[])
+{
+    //"+12-34 "
+    treeElemControl_t   treeElemControl;
+    treeElemParse_t     treeElemParse;
+    treeElement_t*      pRootTreeObj;
+
+    treeElemParse.pStr  = pArrArguments;
+    treeElemParse.idx   = 0x00;
+    treeElemParse.nMax  = strlen(pArrArguments);
+
+    printf("Input string: %s \n", pArrArguments);
+    printf("strlen()= %x \n", treeElemParse.nMax);
+
+    TreeObjParse_V0(&pRootTreeObj, &treeElemParse);
+
+    treeElemControl.nCalls = 0x00;
+    treeElemControl.errorOnCall = 0x00;
+    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0);
+
+    treeElemControl.nCalls = 0x00;
+    treeElemControl.errorOnCall = 0x00;
+    TreeObjEvaluateTree(pRootTreeObj, &treeElemControl);
+    printf("| %s = %f \n", pArrArguments, pRootTreeObj->value);
+
+    treeElemControl.nCalls = 0x00;
+    treeElemControl.errorOnCall = 0x00;
+    TreeObjReliseAllMemory(pRootTreeObj, &treeElemControl);
 }
 //===================================================================================================
 

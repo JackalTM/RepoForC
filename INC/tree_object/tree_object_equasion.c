@@ -78,6 +78,10 @@ treeElement_t* TreeObjNewNodeInTree(treeElement_t newNode)
     treeElement_t* pNewTreeElem;
     pNewTreeElem = (treeElement_t*)malloc(sizeof(treeElement_t));
 
+#ifdef TREE_OBJECT_EQUASION_DEBUG_PRINT
+    printf("DEBUG: ADDR:= malloc(%x)\n", pNewTreeElem);
+#endif
+
     *pNewTreeElem = newNode;
     return pNewTreeElem;
 }
@@ -106,7 +110,7 @@ void TreeObjPrintAllTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeEl
     unsigned int i;
     for(i=0; i< level; i++)
     {   putchar(' ');}
-    printf("|- ");
+    printf("| ");
 
     if(pTreeElement->operation != TREE_OBJ_OPR_NONE)
     {   printf("%c\t", pTreeElement->operation);}
@@ -205,7 +209,7 @@ void TreeObjReliseAllMemory(treeElement_t* pTreeElement, treeElemControl_t* pTre
     TreeObjReliseAllMemory(pTreeElement->pTreeElemRigh, pTreeElemControl);
 
 #ifdef TREE_OBJECT_EQUASION_DEBUG_PRINT
-    printf("DEBUG: ADDR:=  free(%x) \n", pTreeElement);
+    printf("DEBUG: ADDR:=  free(%x) val:= %x \n", pTreeElement, pTreeElement->value);
 #endif // TREE_OBJECT_EQUASION_DEBUG_PRINT
 
     free(pTreeElement);
@@ -213,7 +217,7 @@ void TreeObjReliseAllMemory(treeElement_t* pTreeElement, treeElemControl_t* pTre
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        _ConvertCharacter    
+ * @name        _CharToNumb    
  * @brief       Private function for conversion input char to number from 0 to F.
  * 
  * @param[in]   inChar
@@ -221,32 +225,22 @@ void TreeObjReliseAllMemory(treeElement_t* pTreeElement, treeElemControl_t* pTre
  * @note           
  * @return      char - Converted value of char type    
 */
-static char _ChequeIfNumber(char inChar)
+static char _CharToNumb(char inChar)
 {
-    char retVal;
     if((inChar >= '0') && (inChar <= '9'))
     {
-        retVal = (inChar - '0');
-    }
-    else if((inChar >= 'A') && (inChar <= 'F'))
-    {
-        retVal = (inChar - 0x37);
-    }
-    else if((inChar >= 'a') && (inChar <= 'f'))
-    {
-        retVal = (inChar - 0x57);
+        inChar = (inChar - '0');
     }
     else
     {// When other number return fault
-        retVal = 0xFF;
+        inChar = WRONG_VALUE;
     }
-
-    return retVal;
+    return inChar;
 }
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        _ChequeIfOperation    
+ * @name        _ChequeIfMark    
  * @brief       Private function to check if character is an operation
  * 
  * @param[in]   inChar
@@ -254,7 +248,7 @@ static char _ChequeIfNumber(char inChar)
  * @note           
  * @return      char - Operation if char is this type  
 */
-static char _ChequeIfOperation(char inChar)
+static char _ChequeIfMark(char inChar)
 {
     switch (inChar)
     {
@@ -264,54 +258,133 @@ static char _ChequeIfOperation(char inChar)
     case    '/':       break;
     
     default:
-        return 0xFF;
+        return WRONG_VALUE;
     }
-
     return inChar;
 }
 //===================================================================================================
+
 /****************************************************************************************************
- * @name        TreeObjParse    
- * @brief       
+ * @name        TreeObjParse_Alpha    
+ * @brief       Version Aplpha
  * 
  * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
- * @param[in]   pInputChar Input array of chars for calculation
- * @param[in]   pIdx Index for input array
+ * @param[in]   pTreeElemParse Input array of chars for calculation
  * 
  * @note           
- * @return      
+ * @return      void  
 */
-#define _TREE_OBJ_PARSE_DEBUG_PRINT
-#define _TREE_OBJ_PARSE_NCALLS_MAX 0x10
-static char treeObjParse_cCalls = 0x00;
-void TreeObjParse(treeElement_t** ppTreeElement, char pInputChar[], char* pIdx)
+void TreeObjParse_Alpha(treeElemParse_t* pTreeElemParse)
 {
-    treeObjParse_cCalls = treeObjParse_cCalls + 0x01;
-    if(treeObjParse_cCalls > _TREE_OBJ_PARSE_NCALLS_MAX) return;
-
-    char tCharNumber = pInputChar[*pIdx];
-    char tCharOperator = tCharNumber;
-    (*pIdx) = (*pIdx) + 0x01;
+    char tCharNumb = (char)(pTreeElemParse->pStr[pTreeElemParse->idx]);
+    char tCharMark = tCharNumb;
+    pTreeElemParse->idx = pTreeElemParse->idx + 0x01;
 
     // End of line
-    if(tCharNumber == 0x00) return;
+    if(pTreeElemParse->idx > pTreeElemParse->nMax)
+    {
+       printf("return \n", tCharNumb); 
+       return;
+    }
 
     // Cheque if char is number
-    tCharNumber = _ChequeIfNumber(tCharNumber);
-    if(tCharNumber != 0xFF)
+    tCharNumb = _CharToNumb(tCharNumb);
+    if(tCharNumb != WRONG_VALUE)
     {// Input char is Number from 0 to F
-        *ppTreeElement  = TreeObjNewNodeInTree(TreeObjCreateValue(tCharNumber));
+        printf("| numb %x | \n", tCharNumb);
+    }
+
+    // Cheque if char is operator
+    tCharMark = _ChequeIfMark(tCharMark);
+    if(tCharMark != WRONG_VALUE)
+    {// Input character is operation, then create new node for calculation.
+        printf("| mark %c | \n", tCharMark);
+    }   
+
+    TreeObjParse_Alpha(pTreeElemParse);
+}
+//===================================================================================================
+
+/****************************************************************************************************
+ * @name        TreeObjParse_Beta    
+ * @brief       Version Beta
+ * 
+ * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
+ * @param[in]   pTreeElemParse Input array of chars for calculation
+ * 
+ * @note           
+ * @return      void
+*/
+void TreeObjParse_Beta(treeElement_t** ppTreeElement, treeElemParse_t*  pTreeElemParse)
+{
+    char tCharNumb = (char)(pTreeElemParse->pStr[pTreeElemParse->idx]);
+    char tCharMark = tCharNumb;
+    pTreeElemParse->idx = pTreeElemParse->idx + 0x01;
+
+    // End of line
+    if(pTreeElemParse->idx > pTreeElemParse->nMax)
+    {   return;}
+
+    // Cheque if char is number
+    tCharNumb = _CharToNumb(tCharNumb);
+    if(tCharNumb != WRONG_VALUE)
+    {// Input char is Number from 0 to F
+        *ppTreeElement  = TreeObjNewNodeInTree(TreeObjCreateValue(tCharNumb));
         return;
     }
 
     // Cheque if char is operator
-    tCharOperator = _ChequeIfOperation(tCharOperator);
-    if(tCharOperator != 0xFF)
+    tCharMark = _ChequeIfMark(tCharMark);
+    if(tCharMark != WRONG_VALUE)
     {// Input character is operation, then create new node for calculation.
-        treeElement_t* pNewTreeElement = TreeObjNewNodeInTree(TreeObjCreateOperation(tCharOperator));
+        treeElement_t* pNewTreeElement = TreeObjNewNodeInTree(TreeObjCreateOperation(tCharMark));
 
-        TreeObjParse(&(pNewTreeElement->pTreeElemLeft), pInputChar, pIdx);
-        TreeObjParse(&(pNewTreeElement->pTreeElemRigh), pInputChar, pIdx);
+        TreeObjParse_Beta(&(pNewTreeElement->pTreeElemLeft), pTreeElemParse);
+        TreeObjParse_Beta(&(pNewTreeElement->pTreeElemRigh), pTreeElemParse);
+
+        *ppTreeElement = pNewTreeElement;
+    }
+
+    return;
+}
+//===================================================================================================
+
+/****************************************************************************************************
+ * @name        TreeObjParse_V0    
+ * @brief       Version Beta
+ * 
+ * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
+ * @param[in]   pTreeElemParse Input array of chars for calculation
+ * 
+ * @note        Bug fixed with only one branch
+ * @return      void
+*/
+void TreeObjParse_V0(treeElement_t** ppTreeElement, treeElemParse_t* pTreeElemParse)
+{
+    char tCharNumb = (char)(pTreeElemParse->pStr[pTreeElemParse->idx]);
+    char tCharMark = tCharNumb;
+    pTreeElemParse->idx = pTreeElemParse->idx + 0x01;
+
+    // End of line
+    if(pTreeElemParse->idx > pTreeElemParse->nMax)
+    {   return; }
+
+    // Cheque if char is number
+    tCharNumb = _CharToNumb(tCharNumb);
+    if(tCharNumb != WRONG_VALUE)
+    {// Input char is Number from 0 to F
+        *ppTreeElement  = TreeObjNewNodeInTree(TreeObjCreateValue(tCharNumb));
+        return;
+    }
+
+    // Cheque if char is operator
+    tCharMark = _ChequeIfMark(tCharMark);
+    if(tCharMark != WRONG_VALUE)
+    {// Input character is operation, then create new node for calculation.
+        treeElement_t* pNewTreeElement = TreeObjNewNodeInTree(TreeObjCreateOperation(tCharMark));
+
+        TreeObjParse_V0(&(pNewTreeElement->pTreeElemLeft), pTreeElemParse);
+        TreeObjParse_V0(&(pNewTreeElement->pTreeElemRigh), pTreeElemParse);
 
         *ppTreeElement = pNewTreeElement;
     }
