@@ -101,11 +101,9 @@ treeElement_t* TreeObjNewNodeInTree(treeElement_t newNode)
 void TreeObjPrintAllTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeElemControl, unsigned int level)
 {
     pTreeElemControl->nCalls++;
-    if((pTreeElemControl->nCalls > MAX_AMOUNT_OF_CALLS) || (pTreeElement == NULL)) 
-    {
-        pTreeElemControl->errorOnCall = pTreeElemControl->nCalls;
-        return;
-    }
+    if((pTreeElement == NULL) || (pTreeElemControl->nCalls > pTreeElemControl->nMAX))
+    {   pTreeElemControl->exitOnCall = pTreeElemControl->nCalls;
+        return;}
 
     unsigned int i;
     for(i=0; i< level; i++)
@@ -138,11 +136,9 @@ void TreeObjPrintAllTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeEl
 void TreeObjEvaluateTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeElemControl)
 {
     pTreeElemControl->nCalls++;
-    if((pTreeElemControl->nCalls > MAX_AMOUNT_OF_CALLS) || (pTreeElement == NULL))
-    {
-        pTreeElemControl->errorOnCall = pTreeElemControl->nCalls;
-        return;
-    }
+    if((pTreeElement == NULL) || (pTreeElemControl->nCalls > pTreeElemControl->nMAX))
+    {   pTreeElemControl->exitOnCall = pTreeElemControl->nCalls;
+        return; }
         
     TreeObjEvaluateTree(pTreeElement->pTreeElemLeft, pTreeElemControl);
     TreeObjEvaluateTree(pTreeElement->pTreeElemRigh, pTreeElemControl);
@@ -202,8 +198,9 @@ void TreeObjEvaluateTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeEl
 void TreeObjReliseAllMemory(treeElement_t* pTreeElement, treeElemControl_t* pTreeElemControl)
 {
     pTreeElemControl->nCalls++;
-    if(pTreeElement == NULL) 
-    {   return;}
+    if((pTreeElement == NULL) || (pTreeElemControl->nCalls > pTreeElemControl->nMAX)) 
+    {   pTreeElemControl->exitOnCall = pTreeElemControl->nCalls;
+        return; }
 
     TreeObjReliseAllMemory(pTreeElement->pTreeElemLeft, pTreeElemControl);
     TreeObjReliseAllMemory(pTreeElement->pTreeElemRigh, pTreeElemControl);
@@ -228,13 +225,11 @@ void TreeObjReliseAllMemory(treeElement_t* pTreeElement, treeElemControl_t* pTre
 static char _CharToNumb(char inChar)
 {
     if((inChar >= '0') && (inChar <= '9'))
-    {
-        inChar = (inChar - '0');
-    }
+    {   inChar = (inChar - '0');}
     else
     {// When other number return fault
-        inChar = WRONG_VALUE;
-    }
+        inChar = WRONG_VALUE;}
+        
     return inChar;
 }
 //===================================================================================================
@@ -252,10 +247,10 @@ static char _ChequeIfMark(char inChar)
 {
     switch (inChar)
     {
-    case    '+':       break;
-    case    '-':       break;
-    case    '*':       break;
-    case    '/':       break;
+        case    '+':       break;
+        case    '-':       break;
+        case    '*':       break;
+        case    '/':       break;
     
     default:
         return WRONG_VALUE;
@@ -282,24 +277,20 @@ void TreeObjParse_Alpha(treeElemParse_t* pTreeElemParse)
 
     // End of line
     if(pTreeElemParse->idx > pTreeElemParse->nMax)
-    {
-       printf("return \n", tCharNumb); 
-       return;
-    }
+    {   printf("return \n", tCharNumb); 
+       return; }
 
     // Cheque if char is number
     tCharNumb = _CharToNumb(tCharNumb);
     if(tCharNumb != WRONG_VALUE)
     {// Input char is Number from 0 to F
-        printf("| numb %x | \n", tCharNumb);
-    }
+        printf("| numb %x | \n", tCharNumb);}
 
     // Cheque if char is operator
     tCharMark = _ChequeIfMark(tCharMark);
     if(tCharMark != WRONG_VALUE)
     {// Input character is operation, then create new node for calculation.
-        printf("| mark %c | \n", tCharMark);
-    }   
+        printf("| mark %c | \n", tCharMark);}   
 
     TreeObjParse_Alpha(pTreeElemParse);
 }
@@ -330,8 +321,7 @@ void TreeObjParse_Beta(treeElement_t** ppTreeElement, treeElemParse_t*  pTreeEle
     if(tCharNumb != WRONG_VALUE)
     {// Input char is Number from 0 to F
         *ppTreeElement  = TreeObjNewNodeInTree(TreeObjCreateValue(tCharNumb));
-        return;
-    }
+        return; }
 
     // Cheque if char is operator
     tCharMark = _ChequeIfMark(tCharMark);
@@ -343,9 +333,7 @@ void TreeObjParse_Beta(treeElement_t** ppTreeElement, treeElemParse_t*  pTreeEle
         TreeObjParse_Beta(&(pNewTreeElement->pTreeElemRigh), pTreeElemParse);
 
         *ppTreeElement = pNewTreeElement;
-    }
-
-    return;
+        return; }
 }
 //===================================================================================================
 
@@ -363,7 +351,7 @@ void TreeObjParse_V0(treeElement_t** ppTreeElement, treeElemParse_t* pTreeElemPa
 {
     char tCharNumb = (char)(pTreeElemParse->pStr[pTreeElemParse->idx]);
     char tCharMark = tCharNumb;
-    pTreeElemParse->idx = pTreeElemParse->idx + 0x01;
+    (pTreeElemParse->idx)++;
 
     // End of line
     if(pTreeElemParse->idx > pTreeElemParse->nMax)
@@ -374,8 +362,7 @@ void TreeObjParse_V0(treeElement_t** ppTreeElement, treeElemParse_t* pTreeElemPa
     if(tCharNumb != WRONG_VALUE)
     {// Input char is Number from 0 to F
         *ppTreeElement  = TreeObjNewNodeInTree(TreeObjCreateValue(tCharNumb));
-        return;
-    }
+        return; }
 
     // Cheque if char is operator
     tCharMark = _ChequeIfMark(tCharMark);
@@ -387,9 +374,7 @@ void TreeObjParse_V0(treeElement_t** ppTreeElement, treeElemParse_t* pTreeElemPa
         TreeObjParse_V0(&(pNewTreeElement->pTreeElemRigh), pTreeElemParse);
 
         *ppTreeElement = pNewTreeElement;
-    }
-
-    return;
+        return; }
 }
 //===================================================================================================
 

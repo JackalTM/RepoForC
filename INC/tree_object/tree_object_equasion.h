@@ -16,23 +16,26 @@
 //#define TREE_OBJECT_EQUASION_DEBUG_PRINT
 
 typedef struct treeElement_t
-{// Structure for conecting treeobject
+{// Structure for conecting treeobject.
     struct treeElement_t* pTreeElemLeft;
     struct treeElement_t* pTreeElemRigh;
 
-    double value;
-    char operation;
-    char calculationState;
+    double  value;
+    char    operation;
+    char    calculationState;
 }treeElement_t;
 
 typedef struct 
-{// 
+{// Structure for recursion call.
+ // Posibility for infinite call itself.
     unsigned short int nCalls;
-    unsigned short int errorOnCall;
+    unsigned short int nMAX;
+    unsigned short int exitOnCall;
 }treeElemControl_t;
 
 typedef struct 
-{// String control
+{// Structure for parse object create control.
+ // Posibility for infinite call itself.
     char* pStr;
     unsigned short int nMax;
     unsigned short int idx;

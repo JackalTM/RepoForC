@@ -26,8 +26,9 @@ void CALL_treeTest01(void)
     obj4.pTreeElemLeft = (treeElement_t*)&obj3;
     obj4.pTreeElemRigh = (treeElement_t*)&obj5;
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjPrintAllTree((treeElement_t*)&obj2, &treeElemControl, 0x00);
 
     printf("\n -- Amount of self calls:= %x \n", treeElemControl.nCalls);
@@ -59,18 +60,21 @@ void CALL_treeTest02(void)
     obj4.pTreeElemLeft = (treeElement_t*)&obj3;
     obj4.pTreeElemRigh = (treeElement_t*)&obj5;
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjPrintAllTree(&obj2, &treeElemControl, 0x00);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjEvaluateTree(&obj2, &treeElemControl);
 
     printf("\n\n After calculation \n");
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjPrintAllTree(&obj2, &treeElemControl, 0x00);
 
     printf("\n -- Amount of self calls:= %2x \n", treeElemControl.nCalls);
@@ -182,17 +186,20 @@ void CALL_treeTest05(char pArrArguments[])
 
     TreeObjParse_Beta(&pRootTreeObj, &treeElemParse);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
-    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0);
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
+    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0x00);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjEvaluateTree(pRootTreeObj, &treeElemControl);
     printf("| %s = %f \n", pArrArguments, pRootTreeObj->value);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjReliseAllMemory(pRootTreeObj, &treeElemControl);
 }
 //===================================================================================================
@@ -206,7 +213,6 @@ void CALL_treeTest05(char pArrArguments[])
 */
 void CALL_treeTest06(char pArrArguments[])
 {
-    //"+12-34 "
     treeElemControl_t   treeElemControl;
     treeElemParse_t     treeElemParse;
     treeElement_t*      pRootTreeObj;
@@ -220,17 +226,20 @@ void CALL_treeTest06(char pArrArguments[])
 
     TreeObjParse_V0(&pRootTreeObj, &treeElemParse);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
-    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0);
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
+    TreeObjPrintAllTree(pRootTreeObj, &treeElemControl, 0x00);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjEvaluateTree(pRootTreeObj, &treeElemControl);
     printf("| %s = %f \n", pArrArguments, pRootTreeObj->value);
 
-    treeElemControl.nCalls = 0x00;
-    treeElemControl.errorOnCall = 0x00;
+    treeElemControl.nCalls  = 0x00;
+    treeElemControl.nMAX    = MAX_AMOUNT_OF_CALLS;
+    treeElemControl.exitOnCall = 0x00;
     TreeObjReliseAllMemory(pRootTreeObj, &treeElemControl);
 }
 //===================================================================================================
