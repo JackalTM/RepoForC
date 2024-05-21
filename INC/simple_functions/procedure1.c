@@ -1,18 +1,41 @@
 #include "procedure1.h"
+#ifdef _PROCEDURE1_H
 
-void GetBitWiseOperation(uint8_t n)
+
+static char* itoa_simple_helper(char *dest, int i) 
 {
-    uint32_t retVal[32];
-    uint8_t i, j;
-
-    for(i=0; i<n; i++)
-    {
-        retVal[i] = ~(1 << i);
-    }
-
-    printf("Evey MASK for \n", 0);
-    for(i=0; i<n; i++)
-    {
-        printf("#define MASK_TRUE_BIT_%0.2i 0x%0.8xU \n",i , retVal[i]);
-    }
+  if (i <= -10) 
+  {
+    dest = itoa_simple_helper(dest, i/10);
+  }
+  
+  *dest++ = '0' - i%10;
+  return dest;
 }
+
+char *itoa_simple(char *dest, int i) 
+{
+  char *s = dest;
+  if (i < 0) 
+  {
+    *s++ = '-';
+  } 
+  else 
+  {
+    i = -i;
+  }
+  *itoa_simple_helper(s, i) = '\0';
+  return dest;
+}
+
+void CALL_ProcedureTest(void)
+{
+  char s[64];
+  puts(itoa_simple(s, 0xFF));
+
+  puts(itoa_simple(s, 0xF0));
+
+}
+
+
+#endif // PROCEDURE1_H
