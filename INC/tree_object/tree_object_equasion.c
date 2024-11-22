@@ -14,7 +14,7 @@
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        CreateOperation
+ * @name        TreeObj CreateOperation
  * @brief       Create operation for tree 
  * 
  * @param[in]   op Type of operation as char 
@@ -39,7 +39,7 @@ treeElement_t TreeObjCreateOperation(char op)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        CreateValue  
+ * @name        TreeObj CreateValue  
  * @brief       Add value for the oparation
  * 
  * @param[in]   value Value for operation   
@@ -64,7 +64,7 @@ treeElement_t TreeObjCreateValue(double value)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        NewNodeInTree  
+ * @name        TreeObj NewNodeInTree  
  * @brief       Creation new note of a tree.
  *              After alocating memory data in asigned
  * 
@@ -88,14 +88,14 @@ treeElement_t* TreeObjNewNodeInTree(treeElement_t newNode)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        PrintAllTree
+ * @name        TreeObj PrintAllTree
  * @brief       Print all equqsions for tree
  * 
  * @param[in]   pTreeElement Pointer to tree object structure  
  * @param[in]   pTreeElemControl Pointer to call control diagnose
  * @param[in]   level Indentetion lever for print
  * 
- * @note        
+ * @note        This function called recurency
  * @return      void      
 */
 void TreeObjPrintAllTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeElemControl, unsigned int level)
@@ -124,7 +124,7 @@ void TreeObjPrintAllTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeEl
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        EvaluateTree
+ * @name        TreeObj EvaluateTree
  * @brief       Evaluate tree object
  * 
  * @param[in]   pTreeElement Pointer to tree object structure  
@@ -185,7 +185,7 @@ void TreeObjEvaluateTree(treeElement_t* pTreeElement, treeElemControl_t* pTreeEl
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        TreeObjReliseAllMemory
+ * @name        TreeObj ReliseAllMemory
  * @brief       Relise memory for a alocated tree object.
  *              Memory need to be free acording to structure
  * 
@@ -260,7 +260,7 @@ static char _ChequeIfMark(char inChar)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        TreeObjParse_Alpha    
+ * @name        TreeObj Parse_Alpha    
  * @brief       Version Aplpha
  * 
  * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
@@ -297,7 +297,7 @@ void TreeObjParse_Alpha(treeElemParse_t* pTreeElemParse)
 //===================================================================================================
 
 /****************************************************************************************************
- * @name        TreeObjParse_Beta    
+ * @name        TreeObj Parse_Beta    
  * @brief       Version Beta
  * 
  * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
@@ -339,7 +339,7 @@ void TreeObjParse_Beta(treeElement_t** ppTreeElement, treeElemParse_t*  pTreeEle
 
 /****************************************************************************************************
  * @name        TreeObjParse_V0    
- * @brief       Version Beta
+ * @brief       Version V0.0
  * 
  * @param[in]   ppTreeElement Pointer to modyfi pointer to tree object
  * @param[in]   pTreeElemParse Input array of chars for calculation

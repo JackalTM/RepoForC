@@ -7,7 +7,7 @@
 
 char *itoa_simple(char *dest, int i);
 
-void NumberToString(char* pStr, uint8_t lenght, uint8_t number);
+void NumberToString(char* pStr, uint8_t strLen, uint8_t number);
 
 void CALL_ProcedureTest(void);
 

@@ -208,7 +208,7 @@ void CALL_treeTest05(char pArrArguments[])
  * @name        CALL_treeTest06
  * @brief       Call for test tree object  
  * 
- * @note           
+ * @note        Call function for test functionality
  * @return      void    
 */
 void CALL_treeTest06(char pArrArguments[])

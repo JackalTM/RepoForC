@@ -2,6 +2,15 @@
 
 #ifdef _FUNCTION_POINTERS1_H
 
+/************************************************************************************************
+ * @name        FunctionPointerInAndOutTest1
+ * 
+ * @brief       Function that return furtion pointer
+ *              typedef uint8_t (*pFunType_oneArg)(uint8_t)
+ * 
+ * @param[in]   inPfun Function pointer of type pFunType_oneArg
+ *              
+ */
 pFunType_oneArg FunctionPointerInAndOutTest1(pFunType_oneArg inPfun)
 {
     pFunType_oneArg pFunNOT;
@@ -9,6 +18,17 @@ pFunType_oneArg FunctionPointerInAndOutTest1(pFunType_oneArg inPfun)
 
     return pFunNOT;
 }
+//===============================================================================================
+
+/************************************************************************************************
+ * @name        FunctionPointerInAndOutTest2
+ * 
+ * @brief       Function that return furtion pointer
+ *              typedef uint8_t (*pFunType_oneArg)(uint8_t)
+ * 
+ * @param[in]   inPfun Function pointer of type pFunType_oneArg
+ *              
+ */
 pFunType_twoArg FunctionPointerInAndOutTest2(pFunType_twoArg pFunIN[], uint8_t maxn,uint8_t n)
 {
     pFunType_twoArg pFun; 
@@ -19,6 +39,7 @@ pFunType_twoArg FunctionPointerInAndOutTest2(pFunType_twoArg pFunIN[], uint8_t m
 
     return pFun;
 }
+
 void CallFunctionPointerTest1(void)
 {
     uint8_t retval, i;
@@ -46,6 +67,7 @@ void CallFunctionPointerTest1(void)
         printf("Arr Return value: %x \n", retval); 
     }
 }
+
 void CallFunctionPointerTest2(void)
 {
     uint8_t retval, i;
